@@ -2,11 +2,12 @@
     $curr_route = request()->route()->getName();
 
     $dashActive = in_array($curr_route, ['home']) ? 'active' : '';
+    $questActive = in_array($curr_route, ['defquestionStore']) ? 'active' : '';
     $formActive = in_array($curr_route, ['formRead', 'formQuestion']) ? 'active' : '';
     $reportActive = in_array($curr_route, ['reportRead', 'reportViewSurvey']) ? 'active' : '';
     $userActive = in_array($curr_route, ['userRead']) ? 'active' : '';
 @endphp
-<aside class="main-sidebar sidebar-green-primary elevation-4">
+<aside class="main-sidebar sidebar-green-primary elevation-1">
     <a href="" class="brand-link text-center" style="background-color: #1f5036;">
         <span class="brand-text font-weight-bold text-light">Customer Satisfaction Feedback</span>
     </a>
@@ -43,7 +44,18 @@
                         Dashboard
                     </p>
                 </a>
+            </li>
 
+            @if(Auth::guard('web')->user()->role == 'Administrator')
+                <li class="nav-item">
+                    <a href="{{ route('defquestionStore') }}" class="nav-link {{ $questActive }}">
+                        <i class="nav-icon fas fa-question"></i>
+                        <p>
+                            Questions
+                        </p>
+                    </a>
+                </li>
+            @endif
 
             <li class="nav-item">
                 <a href="{{ route('formRead') }}" class="nav-link  {{ $formActive }}">

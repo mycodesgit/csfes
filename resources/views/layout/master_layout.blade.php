@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="{{ asset('style/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
 
     <link rel="stylesheet" href="{{ asset('style/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
-     <!-- Logo -->
+    <!-- Logo -->
     <link rel="shortcut icon" href="{{ asset('style/img/logo.png') }}">
 
     <style> 
@@ -186,6 +186,49 @@
     <script src="{{ asset('style/plugins/jquery-validation/additional-methods.min.js') }}"></script>
 
     <script src="{{ asset('style/js/validation/addtitleValidation.js') }}"></script>
+
+    <script>
+        let currentCard = 1;
+        const totalCards = document.querySelectorAll('[id^="card-"]').length;
+
+        $(document).ready(function () {
+            function checkInputs(cardId, buttonId) {
+                let allFilled = true;
+
+                if ($(cardId + ' input[type="radio"]').length > 0) {
+                    $(cardId + ' .radio-group').each(function () {
+                        let radioGroupName = $(this).find('input[type="radio"]').attr('name');
+                        if ($(`input[name="${radioGroupName}"]:checked`).length === 0) {
+                            allFilled = false;
+                            return false;
+                        }
+                    });
+                } else {
+                    $(cardId + ' .required-input').each(function () {
+                        if ($(this).val().trim() === '') {
+                            allFilled = false;
+                            return false;
+                        }
+                    });
+                }
+
+                $(buttonId).prop('disabled', !allFilled);
+            }
+
+            $('#card-1 .required-input').on('input change', function () {
+                checkInputs('#card-1', '#next-btn');
+            });
+
+            $('#card-2 input[type="radio"]').on('change', function () {
+                checkInputs('#card-2', '#submit-btn');
+            });
+
+            checkInputs('#card-1', '#next-btn');
+            checkInputs('#card-2', '#submit-btn');
+
+            updateProgressBar();
+        });
+    </script>
 
     <script>
          $(function () {

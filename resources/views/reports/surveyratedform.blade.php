@@ -36,19 +36,19 @@
 			To help us improve our future trainings and activities, please spare us a moment to answer this survey.
 		</p>
 		<p style="font-family: Arial; font-size: 10pt; padding-left: 50px !important;">
-			Training/Workshop Title: <u>{{ $formtitleID->title }}</u>
+			Training/Workshop Title: <u>{{ $surveyRatings->first()->title }}</u>
 		</p>
 		<p style="font-family: Arial; font-size: 10pt; padding-left: 50px !important;">
-			Office handling the training: <u>{{ $formtitleID->office }}</u>
+			Office handling the training: <u>{{ $surveyRatings->first()->office }}</u>
 		</p>
 		<p style="font-family: Arial; font-size: 10pt; padding-left: 50px !important; margin-top: -10px;">
-			Speaker/s: <u>{{ $formtitleID->speaker }}</u>
+			Speaker/s: <u>{{ $surveyRatings->first()->speaker }}</u>
 		</p>
 		<p style="font-family: Arial; font-size: 10pt; padding-left: 50px !important; margin-top: -10px;">
-			Date: <u>{{ \Carbon\Carbon::parse($formtitleID->training_date)->format('F j, Y'); }}</u>
+			Date: <u>{{ \Carbon\Carbon::parse($surveyRatings->first()->training_date)->format('F j, Y'); }}</u>
 		</p>
 		<p style="font-family: Arial; font-size: 10pt; padding-left: 50px !important; margin-top: -10px;">
-			Venue: <u>{{ $formtitleID->training_venue }}</u>
+			Venue: <u>{{ $surveyRatings->first()->training_venue }}</u>
 		</p>
 		<p style="font-family: Arial; font-size: 10pt; padding-left: 50px !important; margin-top: -10px; font-weight: bold;">
 			Please evaluate the following items by encircling the rating values following the legend below:
@@ -86,7 +86,7 @@
 						// }
 					@endphp
 				<tr>
-					<td>{{ $no++ }}. {{ $pdfdata->question }}</td>
+					<td>{{ $no++ }}. {{ $pdfdata->defquestion }}</td>
 					<td style="text-align: center;">
 						<div style="display: flex; justify-content: space-evenly; align-items: center; width: 100%; gap: 80px;">
 							@for ($i = 1; $i <= 5; $i++)
@@ -117,10 +117,10 @@ Please identify if there is any: ___
 			Contact Information: </p>
 
 		<p style="font-family: Arial; font-size: 10pt; padding-left: 50px !important;">
-			Name: 
+			Name: <u>{{ $surveyRatings->first()->name }}</u>
 		</p>
 		<p style="font-family: Arial; font-size: 10pt; padding-left: 50px !important;">
-			Office:
+			Office: <u>{{ $surveyRatings->first()->office }}</u>
 		</p>
 		<p style="font-family: Arial; font-size: 10pt; padding-left: 50px !important;">
 			Contact Information (Landline/CP/Email Address):

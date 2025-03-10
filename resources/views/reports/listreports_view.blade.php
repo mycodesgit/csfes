@@ -69,7 +69,7 @@
                                                         <td>{{ $datareportformtitle->feedback2 }}</td>
                                                         <td>
                                                             <button type="button" class="btn btn-outline-success btn-sm view-pdf" 
-                                                                data-url="{{ route('PDFSurveyRatedTemplate', ['id' => 2]) }}" 
+                                                                data-url="{{ route('PDFSurveyRatedTemplate', ['id' => $datareportformtitle->id]) }}" 
                                                                 data-title="{{ $datareportformtitle->title_id }}">
                                                                 <i class="fas fa-eye"></i>
                                                             </button>
@@ -88,7 +88,7 @@
                                     @break
                                 @endforeach
 
-                                    <iframe src="{{ route('PDFreportViewSurveyresult', ['id' => $titleID]) }}" width="100%" height="500"></iframe>
+                                    {{-- <iframe src="{{ route('PDFreportViewSurveyresult', ['id' => $titleID]) }}" width="100%" height="500"></iframe> --}}
                                     
                                 </div>
                             </div>

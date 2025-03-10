@@ -12,15 +12,18 @@ use PDF;
 use App\Models\TrainingTitle;
 use App\Models\TrainingQuestion;
 use App\Models\FormSurvey;
+use App\Models\DefaultQuestion;
 
 class SurveyFormController extends Controller
 {
     public function surveyformRead($id)
     {
         $formlinks = TrainingTitle::find($id);
-        $formlinksquestions = TrainingTitle::join('training_question', 'training_title.id', '=', 'training_question.title_id')
-            ->where('title_id', $id)
-            ->get();
+        // $formlinksquestions = TrainingTitle::join('training_question', 'training_title.id', '=', 'training_question.title_id')
+        //     ->where('title_id', $id)
+        //     ->get();
+        $formlinksquestions = DefaultQuestion::get();
+        
         return view('surveyquestion.form_survey', compact('formlinks', 'formlinksquestions'));
     }
 

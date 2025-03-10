@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SurveyFormController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MasterController;
+use App\Http\Controllers\DefaultQuestionController;
+use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\FormsController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
@@ -36,7 +38,12 @@ Route::group(['middleware'=>['guest']], function(){
 Route::group(['middleware'=>['login_auth']], function(){
     Route::get('/dashboard', [MasterController::class, 'home'])->name('home');
     
+    
     Route::prefix('forms')->group(function () {
+        Route::get('/list/question/survey/default', [DefaultQuestionController::class, 'defquestionStore'])->name('defquestionStore');
+        Route::post('/list/question/survey/default/add', [DefaultQuestionController::class, 'defquestionCreate'])->name('defquestionCreate');
+
+
         Route::get('/list', [FormsController::class, 'formRead'])->name('formRead');
         Route::post('/add', [FormsController::class, 'formCreate'])->name('formCreate');
         Route::get('/list/view/add/question/{id}', [FormsController::class, 'formQuestion'])->name('formQuestion');

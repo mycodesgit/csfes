@@ -1,99 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CSFES | Log in</title>
-    <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" type="text/css" href="{{ asset('style/login/css/bootstrap.min.css') }}">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('style/plugins/fontawesome-free/css/all.min.css') }}">
-    <!-- icheck bootstrap -->
-    <link rel="stylesheet" href="{{ asset('style/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="{{ asset('style/dist/css/adminlte.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('style/login/css/iofrm-style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('style/login/css/iofrm-theme27.css') }}">
     <!-- Logo -->
     <link rel="shortcut icon" href="{{ asset('style/img/cpsulogo.png') }}">
+
+    <style>
+        .form-body.without-side .form-content .form-button .ibtn:hover {
+            background-color: #198754;
+            color: #fff;
+            -webkit-box-shadow: 0 0 0 rgba(80, 182, 255, 0.31);
+            box-shadow: 0 0 0 rgba(80, 182, 255, 0.31);
+            border: 0;
+        }
+        .password-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .password-container input {
+            width: 100%;
+            padding-right: 40px; /* Space for the eye icon */
+        }
+
+        .password-container i {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #888; /* Default eye color */
+        }
+
+        .password-container i:hover {
+            color: #4CAF50; /* Highlight color on hover */
+        }
+    </style>
 </head>
-   <style>
-    .login-box {
-        color: green;
-    }
-    .btn-primary{
-        background-color: darkyellow !important;
-        border-color: darkyellow !important;
-    }
-   </style>
-<body class="hold-transition login-page">
-    <div class="login-box">
-        <div class="card">
-            <div class="card-body login-card-body" style="background-color: #04401f;">
-                <div class="login-logo" style="text-align: center;">
-                    <img src="{{ asset('style/img/logo.png') }}" alt="Your Logo" style="max-width: 150px; max-height: 150px; display: inline-block;">
+<body>
+    <div class="form-body without-side">
+        <!-- <div class="website-logo">
+            <a href="index.html">
+                <div class="logo">
+                    <img class="logo-size" src="images/logo-light.svg" alt="">
                 </div>
-                <!-- /.login-logo -->
-                <p class="login-box-msg" style="color: white";>Sign in to start your session</p>
-                <form action="{{ route('getLogin') }}" method="post">
-                    @csrf
-                    
-                    @if(session('success'))
-                    <div class="alert alert-success" style="font-size: 12pt;">
-                        <i class="fas fa-check"></i> {{ session('success') }}
-                    </div>
-                    @endif
+            </a>
+        </div> -->
+        <div class="iofrm-layout">
+            <div class="img-holder">
+                <div class="bg"></div>
+                <div class="info-holder">
+                    <img src="{{ asset('style/login/images/graphic8.svg') }}" alt="">
+                </div>
+            </div>
+            <div class="form-holder">
+                <div class="form-content">
+                    <div class="form-items">
+                        <div class="form-icon">
+                            <img src="{{ asset('style/img/cpsulogov4.png') }}" alt="" width="35%">
+                        </div>
+                        <h3 class="form-title-center">CSFES<br>
+                            <small style="font-size: 10pt;">Sign in to start session</small>
+                        </h3>
+                        <form action="{{ route('getLogin') }}" method="post">
+                            @csrf
 
-                    @if(session('error'))
-                    <div class="alert alert-danger" style="font-size: 12pt;">
-                        <i class="fas fa-exclamation-triangle"></i> {{ session('error') }}
-                    </div>
-                    @endif
+                            @if(session('success'))
+                            <div class="alert alert-success" style="font-size: 12pt;">
+                                <i class="fas fa-check"></i> {{ session('success') }}
+                            </div>
+                            @endif
 
-                    <div class="input-group mb-3">
-                        <input type="email" name="email" class="form-control" placeholder="Email">
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-envelope"></span>
+                            @if(session('error'))
+                            <div class="alert alert-danger" style="font-size: 12pt;">
+                                <i class="fas fa-exclamation-triangle"></i> {{ session('error') }}
                             </div>
-                        </div>
-                    </div>
-                    <div class="input-group mb-3">
-                        <input type="password" name="password" class="form-control" placeholder="Password">
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-lock"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-8">
-                            <div class="icheck-primary">
-                                <input type="checkbox" id="remember" >
-                                <label for="remember" style="color: white";>
-                                    Remember Me
-                                </label>
-                            </div>
-                        </div>
-                        <!-- /.col -->
-                        <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block" style="background-color: yellowgreen ;border-color: yellowgreen; ">Sign In</button>
-                        </div>
+                            @endif
 
-                        
-                        <!-- /.col -->
+                            <input class="form-control" type="email" name="email" placeholder="E-mail Address" required autofocus>
+                            <div class="password-container">
+                                <input class="form-control" type="password" name="password" placeholder="Password" id="studentPassInput" required>
+                                <i class="fas fa-eye" id="togglePassword"></i>
+                            </div>
+                            <div class="form-button">
+                                <button id="submit" type="submit" class="ibtn ibtn-full">Sign In</button>
+                            </div>
+                        </form>
                     </div>
-                </form>
-               
-                <!-- /.social-auth-links -->
-               
-            <!-- /.login-card-body -->
+                </div>
+            </div>
         </div>
     </div>
-    <!-- /.login-box -->
-    <!-- jQuery -->
-    <script src="{{ asset('style/plugins/jquery/jquery.min.js') }}"></script>
-    <!-- Bootstrap 4 -->
-    <script src="{{ asset('style/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <!-- AdminLTE App -->
-    <script src="{{ asset('style/dist/js/adminlte.min.js') }}"></script>
+
+    <script src="{{ asset('style/login/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('style/login/js/popper.min.js') }}"></script>
+    <script src="{{ asset('style/login/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('style/login/js/main.js') }}"></script>
+
+    <script>
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('studentPassInput');
+    
+        togglePassword.addEventListener('click', function () {
+            // Toggle password visibility
+            const type = passwordInput.type === 'password' ? 'text' : 'password';
+            passwordInput.type = type;
+    
+            // Change eye icon
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
+    </script>
 </body>
 </html>

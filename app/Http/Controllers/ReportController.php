@@ -13,6 +13,7 @@ use PDF;
 use App\Models\TrainingTitle;
 use App\Models\TrainingQuestion;
 use App\Models\FormSurvey;
+use App\Models\DefaultQuestion;
 
 class ReportController extends Controller
 {
@@ -29,6 +30,8 @@ class ReportController extends Controller
         $reportformtitle = FormSurvey::join('training_title', 'form_survey.title_id', '=', 'training_title.id')
                         ->where('form_survey.title_id', $id)
                         ->get();
+        
+        // $reportformtitle = DefaultQuestion::get();
                         
         $getTitleID =TrainingQuestion::where('title_id', $id)->get();
 
@@ -78,19 +81,17 @@ class ReportController extends Controller
         return $pdf->stream();
     }
 
-    public function PDFSurveyRatedTemplate($id) {
-        //$trainingID = decrypt($id);
+    public function PDFSurveyRatedTemplate($id) 
+    {
         $formtitleID = TrainingTitle::find($id);
-        $surveryID = FormSurvey::find($id);
-        
-        $formtitle = TrainingTitle::join('training_question', 'training_title.id', '=', 'training_question.title_id')
-                    ->where('training_title.id', $id)
-                    ->select('training_title.*', 'training_question.*')
-                    ->get();
 
-        $surveyRatings = FormSurvey::where('id', $surveryID)->get();
-
-        $data=[
+        $surveyRatings = FormSurvey::join('training_title', 'form_survey.title_id', '=', 'training_title.id')
+                        ->where('form_survey.title_id', $id)
+                        ->get();
+    
+        $formtitle = DefaultQuestion::get();
+    
+        $data = [
             'formtitleID' => $formtitleID,
             'formtitle' => $formtitle, 
             'surveyRatings' => $surveyRatings

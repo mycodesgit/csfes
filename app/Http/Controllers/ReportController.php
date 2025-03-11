@@ -82,23 +82,21 @@ class ReportController extends Controller
     }
 
     public function PDFSurveyRatedTemplate($id) 
-    {
-        $formtitleID = TrainingTitle::find($id);
+{
+    $surveyRatings = FormSurvey::join('training_title', 'form_survey.title_id', '=', 'training_title.id')
+                    ->where('form_survey.title_id', $id) // Ensure data matches the selected entry
+                    ->get();
 
-        $surveyRatings = FormSurvey::join('training_title', 'form_survey.title_id', '=', 'training_title.id')
-                        ->where('form_survey.title_id', $id)
-                        ->get();
-    
-        $formtitle = DefaultQuestion::get();
-    
-        $data = [
-            'formtitleID' => $formtitleID,
-            'formtitle' => $formtitle, 
-            'surveyRatings' => $surveyRatings
-        ];
+    $formtitle = DefaultQuestion::get();
 
-        $pdf = PDF::loadView('reports.surveyratedform', $data)->setPaper('Legal', 'portrait');
-        return $pdf->stream();
-    }
+    $data = [
+        'formtitle' => $formtitle, 
+        'surveyRatings' => $surveyRatings
+    ];
+
+    $pdf = PDF::loadView('reports.surveyratedform', $data)->setPaper('Legal', 'portrait');
+    return $pdf->stream();
+}
+
 }
 

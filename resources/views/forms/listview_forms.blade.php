@@ -79,7 +79,7 @@
                                             <a class="nav-link active text-dark" id="tab1-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="tab1" aria-selected="true">Table Question</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link text-dark" id="tab2-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2" aria-selected="false">PDF Form Question</a>
+                                            <a class="nav-link text-dark" id="tab2-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2" aria-selected="false">Preview Survey Questionaire</a>
                                         </li>
                                     </ul>
                                 </div>

@@ -14,7 +14,7 @@
 
     <style>
         #alertImage {
-            background: url('{{ asset('style/img/formheader.jpg') }}') no-repeat center center;
+            background: url('{{ asset('style/img/gformheader.png') }}') no-repeat center center;
             background-size: cover;
             height: 100%;
             width: 100%;

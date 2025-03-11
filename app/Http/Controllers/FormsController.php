@@ -13,6 +13,7 @@ use PDF;
 
 use App\Models\TrainingTitle;
 use App\Models\TrainingQuestion;
+use App\Models\DefaultQuestion;
 
 class FormsController extends Controller
 {
@@ -50,6 +51,15 @@ class FormsController extends Controller
                 $addtitle->update([
                     'surveylink' => $unique_link,
                 ]);     
+
+                $defaultQuestions = DefaultQuestion::all();  // Fetch all DefaultQuestion entries
+                foreach ($defaultQuestions as $question) {
+                    TrainingQuestion::create([
+                        'title_id' => $addtitle->id,
+                        'question' => $question->defquestion, 
+                        'remember_token' => Str::random(60),
+                    ]);
+                }
                 
                 return redirect()->route('formQuestion', encrypt($addtitle->id ))->with('success', 'Form Created Successfully');             
             }catch(\Exception $e) {

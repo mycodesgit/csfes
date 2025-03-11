@@ -46,17 +46,6 @@
                 </a>
             </li>
 
-            @if(Auth::guard('web')->user()->role == 'Administrator')
-                <li class="nav-item">
-                    <a href="{{ route('defquestionStore') }}" class="nav-link {{ $questActive }}">
-                        <i class="nav-icon fas fa-question"></i>
-                        <p>
-                            Questions
-                        </p>
-                    </a>
-                </li>
-            @endif
-
             <li class="nav-item">
                 <a href="{{ route('formRead') }}" class="nav-link  {{ $formActive }}">
                     <i class="nav-icon fas fa-solid fa-bars-progress"></i>

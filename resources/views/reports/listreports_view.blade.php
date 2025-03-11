@@ -70,10 +70,11 @@
                                                         <td>
                                                             <button type="button" class="btn btn-outline-success btn-sm view-pdf" 
                                                                 data-url="{{ route('PDFSurveyRatedTemplate', ['id' => $datareportformtitle->id]) }}" 
-                                                                data-title="{{ $datareportformtitle->title_id }}">
+                                                                data-title="{{ $datareportformtitle->title }}">
                                                                 <i class="fas fa-eye"></i>
                                                             </button>
                                                         </td>
+                                                        
                                                     </tr>
                                                 @endforeach
                                             </tbody>
@@ -88,7 +89,7 @@
                                     @break
                                 @endforeach
 
-                                    {{-- <iframe src="{{ route('PDFreportViewSurveyresult', ['id' => $titleID]) }}" width="100%" height="500"></iframe> --}}
+                                    <iframe src="{{ route('PDFreportViewSurveyresult', ['id' => $titleID]) }}" width="100%" height="500"></iframe>
                                     
                                 </div>
                             </div>
@@ -122,11 +123,12 @@
             var pdfUrl = $(this).data('url');
             var title = $(this).data('title');
             
-            $('#pdfModalLabel').text(title);
+            $('#pdfModalLabel').text(pdfUrl);
             $('#pdfFrame').attr('src', pdfUrl);
             $('#pdfModal').modal('show');
         });
     });
+
 </script>
 
  @endsection

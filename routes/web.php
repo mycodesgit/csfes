@@ -48,6 +48,7 @@ Route::group(['middleware'=>['login_auth']], function(){
         Route::post('/add', [FormsController::class, 'formCreate'])->name('formCreate');
         Route::get('/list/view/add/question/{id}', [FormsController::class, 'formQuestion'])->name('formQuestion');
         Route::post('list/view/addquestion', [FormsController::class, 'formquestionCreate'])->name('formquestionCreate');
+        Route::post('/update-question/{id}', [FormsController::class, 'updateQuestion'])->name('updateQuestion');
         Route::delete('/form/{id}', [FormsController::class, 'formDelete'])->name('formDelete');
         Route::delete('/question/{id}', [FormsController::class, 'deleteQuestion'])->name('deleteQuestion');
 

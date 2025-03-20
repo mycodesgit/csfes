@@ -17,6 +17,9 @@
     <!-- DataTables -->
     <link rel="stylesheet" href="{{ asset('style/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('style/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="{{ asset('style/plugins/select2/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('style/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
 
     <link rel="stylesheet" href="{{ asset('style/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
     <!-- Logo -->
@@ -95,6 +98,15 @@
             border: 2px solid #007bff;
             color: #007bff;
             font-weight: bold;
+        }
+        .select2-container--default .select2-selection--multiple .select2-selection__choice {
+            background-color: #ffffff;
+            border-color: #28a745;
+            color: #000000;
+            /* font-size: 9pt; */
+            font-weight: bold
+            padding: 0 10px;
+            margin-top: .31rem;
         }
     </style>
 </head>
@@ -178,6 +190,9 @@
     <script src="{{ asset('style/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
     <script src="{{ asset('style/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
 
+    <!-- Select2 -->
+    <script src="{{ asset('style/plugins/select2/js/select2.full.min.js') }}"></script>
+
     <!-- SweetAlert2 -->
     <script src="{{ asset('style/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
 
@@ -187,48 +202,50 @@
 
     <script src="{{ asset('style/js/validation/addtitleValidation.js') }}"></script>
 
-    <script>
-        let currentCard = 1;
-        const totalCards = document.querySelectorAll('[id^="card-"]').length;
+    @if (request()->routeIs('surveyformRead'))
+        <script>
+            let currentCard = 1;
+            const totalCards = document.querySelectorAll('[id^="card-"]').length;
 
-        $(document).ready(function () {
-            function checkInputs(cardId, buttonId) {
-                let allFilled = true;
+            $(document).ready(function () {
+                function checkInputs(cardId, buttonId) {
+                    let allFilled = true;
 
-                if ($(cardId + ' input[type="radio"]').length > 0) {
-                    $(cardId + ' .radio-group').each(function () {
-                        let radioGroupName = $(this).find('input[type="radio"]').attr('name');
-                        if ($(`input[name="${radioGroupName}"]:checked`).length === 0) {
-                            allFilled = false;
-                            return false;
-                        }
-                    });
-                } else {
-                    $(cardId + ' .required-input').each(function () {
-                        if ($(this).val().trim() === '') {
-                            allFilled = false;
-                            return false;
-                        }
-                    });
+                    if ($(cardId + ' input[type="radio"]').length > 0) {
+                        $(cardId + ' .radio-group').each(function () {
+                            let radioGroupName = $(this).find('input[type="radio"]').attr('name');
+                            if ($(`input[name="${radioGroupName}"]:checked`).length === 0) {
+                                allFilled = false;
+                                return false;
+                            }
+                        });
+                    } else {
+                        $(cardId + ' .required-input').each(function () {
+                            if ($(this).val().trim() === '') {
+                                allFilled = false;
+                                return false;
+                            }
+                        });
+                    }
+
+                    $(buttonId).prop('disabled', !allFilled);
                 }
 
-                $(buttonId).prop('disabled', !allFilled);
-            }
+                $('#card-1 .required-input').on('input change', function () {
+                    checkInputs('#card-1', '#next-btn');
+                });
 
-            $('#card-1 .required-input').on('input change', function () {
+                $('#card-2 input[type="radio"]').on('change', function () {
+                    checkInputs('#card-2', '#submit-btn');
+                });
+
                 checkInputs('#card-1', '#next-btn');
-            });
-
-            $('#card-2 input[type="radio"]').on('change', function () {
                 checkInputs('#card-2', '#submit-btn');
+
+                updateProgressBar();
             });
-
-            checkInputs('#card-1', '#next-btn');
-            checkInputs('#card-2', '#submit-btn');
-
-            updateProgressBar();
-        });
-    </script>
+        </script>
+    @endif
 
     <script>
          $(function () {
@@ -248,74 +265,124 @@
              "responsive": true,
             });
         });
+        $('.select2').select2();
+
+        //Initialize Select2 Elements
+        $('.select2bs4').select2({
+            theme: 'bootstrap4',
+            height: '100'
+        })
     </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const calendarDates = document.getElementById("calendarDates");
-            const calendarMonth = document.getElementById("calendarMonth");
-            const prevMonthBtn = document.getElementById("prevMonth");
-            const nextMonthBtn = document.getElementById("nextMonth");
 
-            let currentDate = new Date();
+    @if (request()->routeIs('surveyformRead'))
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const calendarDates = document.getElementById("calendarDates");
+                const calendarMonth = document.getElementById("calendarMonth");
+                const prevMonthBtn = document.getElementById("prevMonth");
+                const nextMonthBtn = document.getElementById("nextMonth");
 
-            // Sample highlighted event dates (Adjust as needed)
-            let events = [
-                new Date(2024, 3, 3),  // April 3 (Highlighted)
-                new Date(2024, 3, 14), // April 14 (Red)
-                new Date(2024, 3, 25)  // April 25 (Blue)
-            ];
+                let currentDate = new Date();
 
-            function renderCalendar() {
-                let firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
-                let lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
-                let firstDayIndex = firstDay.getDay();
-                let lastDate = lastDay.getDate();
+                // Sample highlighted event dates (Adjust as needed)
+                let events = [
+                    new Date(2024, 3, 3),  // April 3 (Highlighted)
+                    new Date(2024, 3, 14), // April 14 (Red)
+                    new Date(2024, 3, 25)  // April 25 (Blue)
+                ];
 
-                calendarMonth.textContent = currentDate.toLocaleString("default", { month: "long", year: "numeric" });
-                calendarDates.innerHTML = "";
+                function renderCalendar() {
+                    let firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+                    let lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+                    let firstDayIndex = firstDay.getDay();
+                    let lastDate = lastDay.getDate();
 
-                // Fill empty slots before first day
-                for (let i = 0; i < firstDayIndex; i++) {
-                    let emptyCell = document.createElement("div");
-                    calendarDates.appendChild(emptyCell);
-                }
+                    calendarMonth.textContent = currentDate.toLocaleString("default", { month: "long", year: "numeric" });
+                    calendarDates.innerHTML = "";
 
-                // Populate dates
-                for (let i = 1; i <= lastDate; i++) {
-                    let dateCell = document.createElement("div");
-                    dateCell.textContent = i;
-                    let thisDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), i);
-
-                    // Highlight today
-                    let today = new Date();
-                    if (thisDate.toDateString() === today.toDateString()) {
-                        dateCell.classList.add("today");
+                    // Fill empty slots before first day
+                    for (let i = 0; i < firstDayIndex; i++) {
+                        let emptyCell = document.createElement("div");
+                        calendarDates.appendChild(emptyCell);
                     }
 
-                    // Highlight event dates
-                    events.forEach(eventDate => {
-                        if (eventDate.toDateString() === thisDate.toDateString()) {
-                            dateCell.classList.add("event");
+                    // Populate dates
+                    for (let i = 1; i <= lastDate; i++) {
+                        let dateCell = document.createElement("div");
+                        dateCell.textContent = i;
+                        let thisDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), i);
+
+                        // Highlight today
+                        let today = new Date();
+                        if (thisDate.toDateString() === today.toDateString()) {
+                            dateCell.classList.add("today");
                         }
-                    });
 
-                    calendarDates.appendChild(dateCell);
+                        // Highlight event dates
+                        events.forEach(eventDate => {
+                            if (eventDate.toDateString() === thisDate.toDateString()) {
+                                dateCell.classList.add("event");
+                            }
+                        });
+
+                        calendarDates.appendChild(dateCell);
+                    }
                 }
-            }
 
-            prevMonthBtn.addEventListener("click", function() {
-                currentDate.setMonth(currentDate.getMonth() - 1);
-                renderCalendar();
+                prevMonthBtn.addEventListener("click", function() {
+                    currentDate.setMonth(currentDate.getMonth() - 1);
+                    renderCalendar();
+                });
+
+                nextMonthBtn.addEventListener("click", function() {
+                    currentDate.setMonth(currentDate.getMonth() + 1);
+                    renderCalendar();
+                });
+
+                renderCalendar(); // Initial render
             });
+        </script>
+    @endif
 
-            nextMonthBtn.addEventListener("click", function() {
-                currentDate.setMonth(currentDate.getMonth() + 1);
-                renderCalendar();
+    @if (request()->routeIs('formQuestion'))
+        <script>
+            $(document).ready(function() {
+            // Open Edit Modal and Populate Data
+            $('.editBtn').click(function() {
+                var id = $(this).data('id');
+                var question = $(this).data('question');
+        
+                $('#edit_question_id').val(id);
+                $('#edit_question_text').val(question);
+                $('#editQuestionModal').modal('show');
             });
-
-            renderCalendar(); // Initial render
+        
+            // Handle Form Submission for Editing
+            $('#editQuestionForm').submit(function(e) {
+                e.preventDefault();
+                var id = $('#edit_question_id').val();
+                var question = $('#edit_question_text').val();
+                var _token = $('input[name="_token"]').val();
+        
+                $.ajax({
+                    url: "{{ route('updateQuestion', ':id') }}".replace(':id', id),
+                    type: "POST",
+                    data: {
+                        _token: _token,
+                        question: question,
+                    },
+                    success: function(response) {
+                        $('#editQuestionModal').modal('hide');
+                        location.reload(); // Refresh table to show updates
+                    },
+                    error: function(xhr) {
+                        alert("Something went wrong!");
+                    }
+                });
+            });
         });
-    </script>
+        </script>
+    @endif
 
 </body>
 </html>

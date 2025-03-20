@@ -29,18 +29,20 @@ class FormsController extends Controller
             $request->validate([
                 'title' => 'required',
                 'speaker' => 'required',
-                'training_date' => 'required',
+                'training_month' => 'required',
                 'surveylink' => 'nullable|url',
                 
             ]);
 
             try{
-
+                $training_days = implode(', ' , $request->input('training_day'));
                 $addtitle = TrainingTitle::create([
                     'title' => $request->input('title'),
                     'office' => Auth::guard('web')->user()->dept,
                     'speaker' => $request->input('speaker'),
-                    'training_date' => $request->input('training_date'),
+                    'training_month' => $request->input('training_month'),
+                    'training_day' => $training_days,
+                    'training_year' => $request->input('training_year'),
                     'training_venue' => $request->input('training_venue'), 
                     'postedBy' => Auth::guard('web')->user()->id, 
                     'remember_token' => Str::random(60),             
@@ -101,6 +103,18 @@ class FormsController extends Controller
             }
         }
     }
+
+    public function updateQuestion(Request $request, $id)
+    {
+        $question = TrainingQuestion::find($id);
+        if ($question) {
+            $question->question = $request->input('question');
+            $question->save();
+            return response()->json(['message' => 'Question updated successfully!']);
+        }
+        return response()->json(['message' => 'Question not found!'], 404);
+    }
+
 
     public function PDFSurveyShowTemplate($id) {
         $trainingID = decrypt($id);

@@ -18,7 +18,9 @@ return new class extends Migration
             $table->string('title');
             $table->string('office');
             $table->string('speaker');
-            $table->string('training_date');
+            $table->string('training_month');
+            $table->string('training_day');
+            $table->string('training_year');
             $table->string('training_venue');
             $table->text('surveylink');
             $table->integer('postedBy');

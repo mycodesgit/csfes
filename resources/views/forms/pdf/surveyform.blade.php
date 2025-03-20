@@ -113,5 +113,9 @@ Please identify if there is any: ___
             
 		</p>
  	</div>
+
+	<div style="position: fixed; bottom: 0; left: 0; width: 100%; text-align: center; margin-bottom: 10px;">
+		<img src="{{ public_path('style/img/surveyfooter2.png') }}" width="60%">
+	</div>
 </body>
 </html>

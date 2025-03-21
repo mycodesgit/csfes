@@ -22,7 +22,10 @@ class SurveyFormController extends Controller
         // $formlinksquestions = TrainingTitle::join('training_question', 'training_title.id', '=', 'training_question.title_id')
         //     ->where('title_id', $id)
         //     ->get();
-        $formlinksquestions = DefaultQuestion::get();
+        $formlinksquestions = TrainingTitle::join('training_question', 'training_title.id', '=', 'training_question.title_id')
+                ->where('training_title.id', $id)
+                ->select('training_title.*', 'training_question.*')
+                ->get();
         
         return view('surveyquestion.form_survey', compact('formlinks', 'formlinksquestions'));
     }

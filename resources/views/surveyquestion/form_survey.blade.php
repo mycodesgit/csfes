@@ -187,7 +187,7 @@
                                     <input type="hidden" name="question[]" value="{{ $dataformlinksquestions->id }}">
                                     <div class="card">
                                         <div class="card-body">
-                                            <h5 class="card-title"> {{ $loop->iteration }}.) {{ $dataformlinksquestions->defquestion }}</h5>
+                                            <h5 class="card-title"> {{ $loop->iteration }}.) {{ $dataformlinksquestions->question }}</h5>
                                             <p class="card-text mt-5">
                                             </p>
                                             {{-- <a href="#" class="card-link text-dark"><input type="radio" name="question_rate[{{ $dataformlinksquestions->id }}]" value="1"> <b>1</b></a>

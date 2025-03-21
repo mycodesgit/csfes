@@ -86,7 +86,7 @@
 						// }
 					@endphp
 				<tr>
-					<td>{{ $no++ }}. {{ $pdfdata->defquestion }}</td>
+					<td>{{ $no++ }}. {{ $pdfdata->question }}</td>
 					<td style="text-align: center;">
 						<div style="display: flex; justify-content: space-evenly; align-items: center; width: 100%; gap: 80px;">
 							@for ($i = 1; $i <= 5; $i++)
